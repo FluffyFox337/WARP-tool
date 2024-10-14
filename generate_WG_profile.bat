@@ -4,7 +4,7 @@
    :: ===== File info =====
    :: encoding UTF-8
    :: syntaxis Batch CMD BAT
-   :: last edit:14.10.24 / 17:50 msk
+   :: last edit:14.10.24 / 19:20 msk
    :: =====================
    
  :: cd c:\wgcf
@@ -30,6 +30,7 @@
 set "/dp=%~dp0"
 set "/adp=C:\Windows\System32"
 
+set "/wt=%APPDATA%\warp_tool"
 set "/wt_profiles=%APPDATA%\warp_tool\profiles-conf"
 set "/wt_scripts=%APPDATA%\warp_tool\scripts"
 set "/wt_wgcf=%APPDATA%\warp_tool\wgcf"
@@ -78,6 +79,16 @@ call :reset_vars
 :: ========================== folders conditions ==========================================
 if exist "%/dp%%name_conf_wgcf-profile%" del "%/dp%%name_conf_wgcf-profile%" >nul 2>&1
 
+if not exist "%/wt%" call :mkdir %/wt_profiles% & call :mkdir %/wt_scripts% & call :mkdir %/wt_wgcf% & call :mkdir %/wt_wg%
+:: start %/wt%
+
+cd
+echo ========================================================================================
+cd /d %wt_scripts%
+echo ========================================================================================
+cd
+pause
+
 if not exist "%/dp%%name_exe_wgcf%" rename *.exe %name_exe_wgcf%
 if not exist "%/dp%%name_exe_wgcf%" goto wgcf_not_exist
 
@@ -92,8 +103,7 @@ echo ===========================================
 echo Enter about 50000 to 60000.
 echo          Example: 55685
 set /p wgListenPort_num= Enter ListenPort: 
-call :set_wglistenport %wgListenPort_num%
-call :write_wglistenport
+call :set_wglistenport %wgListenPort_num% & call :write_wglistenport
 
 :cnt0
 if not exist "%/dp%%name_txt_wgIP%" (
@@ -112,30 +122,14 @@ echo -------------------------------------------
 echo [9] exit.
 choice /c 123456789 /n
  if errorlevel 9 goto exit
- if errorlevel 8 (
- call :set_wgIP 162.159.193.8
- goto cnt01 )
- if errorlevel 7 (
- call :set_wgIP 162.159.193.7
- goto cnt01 )
- if errorlevel 6 (
- call :set_wgIP 162.159.193.6
- goto cnt01 )
- if errorlevel 5 (
- call :set_wgIP 162.159.193.5
- goto cnt01 )
- if errorlevel 4 (
- call :set_wgIP 162.159.193.4
- goto cnt01 )
- if errorlevel 3 (
- call :set_wgIP 162.159.193.3
- goto cnt01 )
- if errorlevel 2 (
- call :set_wgIP 162.159.193.2
- goto cnt01 )
- if errorlevel 1 (
- call :set_wgIP 162.159.193.1
- goto cnt01 )
+ if errorlevel 8 call :set_wgIP 162.159.193.8 & goto cnt01
+ if errorlevel 7 call :set_wgIP 162.159.193.7 & goto cnt01
+ if errorlevel 6 call :set_wgIP 162.159.193.6 & goto cnt01
+ if errorlevel 5 call :set_wgIP 162.159.193.5 & goto cnt01
+ if errorlevel 4 call :set_wgIP 162.159.193.4 & goto cnt01
+ if errorlevel 3 call :set_wgIP 162.159.193.3 & goto cnt01
+ if errorlevel 2 call :set_wgIP 162.159.193.2 & goto cnt01
+ if errorlevel 1 call :set_wgIP 162.159.193.1 & goto cnt01
 :cnt01
 call :write_wgip )
 
@@ -151,18 +145,10 @@ echo -------------------------------------------
 echo [5] exit.
 choice /c 12345 /n
  if errorlevel 5 goto exit
- if errorlevel 4 (
- call :set_wgport 4500
- goto cnt02 )
- if errorlevel 3 (
- call :set_wgport 2408
- goto cnt02 )
- if errorlevel 2 (
- call :set_wgport 1701
- goto cnt02 )
- if errorlevel 1 (
- call :set_wgport 500
- goto cnt02 )
+ if errorlevel 4 call :set_wgport 4500 & goto cnt02
+ if errorlevel 3 call :set_wgport 2408 & goto cnt02
+ if errorlevel 2 call :set_wgport 1701 & goto cnt02
+ if errorlevel 1 call :set_wgport 500 & goto cnt02
 :cnt02
 call :write_wgport )
 
@@ -211,7 +197,7 @@ exit
 
 :: ========================== register =========================================================
 call :register
-if not exist "%/dp%%name_conf_wgcf-profile%" (
+if not exist "%/wt_profiles%%name_conf_wgcf-profile%" (
 cls
 echo ============================================================================================
 echo                            %name_conf_wgcf-profile% doesn't exist. 
@@ -388,6 +374,7 @@ set /a vpn_exist=1
 exit /b
 
 :register
+
 wgcf register --accept-tos
 wgcf generate
 
