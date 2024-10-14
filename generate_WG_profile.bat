@@ -4,7 +4,7 @@
    :: ===== File info =====
    :: encoding UTF-8
    :: syntaxis Batch CMD BAT
-   :: last edit:14.10.24 / 17:30 msk
+   :: last edit:14.10.24 / 17:50 msk
    :: =====================
    
  :: cd c:\wgcf
@@ -478,4 +478,12 @@ echo ====================================
 echo %name_conf_wgcf-profile% here: %/wg_cfg%\%name_conf_wgcf-profile%
 timeout /t 2 /nobreak >nul
 color 07
+exit /b
+
+:rmdir
+rmdir /s /q %1
+exit /b
+
+:mkdir
+MD "%1" >nul
 exit /b
