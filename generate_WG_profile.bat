@@ -28,12 +28,19 @@
 
 :: ========================== Pathes ===================================================
 set "/dp=%~dp0"
+set "/adp=C:\Windows\System32"
+
+set "/wt_profiles=%APPDATA%\warp_tool\profiles-conf"
+set "/wt_scripts=%APPDATA%\warp_tool\scripts"
+set "/wt_wgcf=%APPDATA%\warp_tool\wgcf"
+set "/wt_wg=%APPDATA%\warp_tool\wireguard"
+set "/wt_assets=%APPDATA%\warp_tool\assets"
 
 set "/wg=C:\Program Files\WireGuard"
 set "/wg_cfg=%/wg%\Data\Configurations"
 
 :: ========================== Names ====================================================
-set "name_exe_wgcf=wgcf.exe"
+set "name_exe_wgcf=wgcf_2.2.22_windows_386.exe"
 
 set "name_exe_wg_installer_32=wireguard-x86-0.5.3.msi"
 set "name_exe_wg_installer_64=wireguard-amd64-0.5.3.msi"
