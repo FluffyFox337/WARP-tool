@@ -4,7 +4,7 @@
    :: ===== File info =====
    :: encoding UTF-8
    :: syntaxis Batch CMD BAT
-   :: last edit:14.10.24 / 16:00 msk
+   :: last edit:14.10.24 / 17:30 msk
    :: =====================
    
  :: cd c:\wgcf
@@ -17,7 +17,7 @@
    
 :: Start-Process -FilePath "wireguard.exe" -WorkingDirectory "C:\Program Files\WireGuard"
 
-:: Taskkill /f /im %name_exe_wg%
+:: Taskkill /f /im %name_exe_wg_process%
 
 :: https://api.cloudflareclient.com
 :: https://cloudflare.com/cdn-cgi/trace
@@ -30,16 +30,14 @@
 set "/dp=%~dp0"
 
 set "/wg=C:\Program Files\WireGuard"
-set "/wg_cfg=C:\Program Files\WireGuard\Data\Configurations"
-
+set "/wg_cfg=%/wg%\Data\Configurations"
 
 :: ========================== Names ====================================================
-set "name_bat_main=generate_WG_profile.bat"
-
 set "name_exe_wgcf=wgcf.exe"
 
-set "name_exe_wg_installer=wireguard-amd64-0.5.3.msi"
-set "name_exe_wg=wireguard.exe"
+set "name_exe_wg_installer_32=wireguard-x86-0.5.3.msi"
+set "name_exe_wg_installer_64=wireguard-amd64-0.5.3.msi"
+set "name_exe_wg_process=wireguard.exe"
 
 set "name_conf_start=delete-it-after-generate-new-conf.conf"
 
@@ -61,7 +59,7 @@ set "url_WG=https://github.com/FluffyFox337/WireGuard/raw/main/wireguard-amd64-0
 set "url_wgcf=https://github.com/FluffyFox337/WireGuard/raw/main/wireguard-amd64-0.5.3.msi"
 
 
-set "url_start_conf=https://raw.githubusercontent.com/FluffyFox337/WireGuard/refs/heads/main/delete-it-after-generate-new-conf.conf"
+set "url_start_conf=https://raw.githubusercontent.com/FluffyFox337/WARP-tool/refs/heads/main/assets/profiles-conf/delete-it-after-generate-new-conf.conf"
 
 set "url_script_obtain=https://raw.githubusercontent.com/FluffyFox337/WireGuard/refs/heads/main/wg_block_obtain.ps1"
 set "url_script_start_wg=https://raw.githubusercontent.com/FluffyFox337/WireGuard/refs/heads/main/start_wg.bat"
@@ -344,18 +342,18 @@ set "Endpoint=Endpoint = %wgip%:%wgport%"
 exit /b
 
 :start_wg_installer
-start "" %/dp%%name_exe_wg_installer%
+start "" %/dp%%name_exe_wg_installer_64%
 exit /b
 
 :start_wg
-start "" %/dp%%name_exe_wg%
+start "" %/dp%%name_exe_wg_process%
 exit /b
 
 :download_wg
-powershell -command "& { Invoke-WebRequest -Uri '%url_WG%' -OutFile '%/dp%%name_exe_wg_installer%' }" >nul
-start "" %/dp%%name_exe_wg_installer%
+powershell -command "& { Invoke-WebRequest -Uri '%url_WG%' -OutFile '%/dp%%name_exe_wg_installer_64%' }" >nul
+start "" %/dp%%name_exe_wg_installer_64%
 timeout /t 5 /nobreak >nul
-Taskkill /f /im %name_exe_wg%
+Taskkill /f /im %name_exe_wg_process%
 exit /b
 
 :download_start_conf
