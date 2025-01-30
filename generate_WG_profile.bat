@@ -110,10 +110,10 @@ if not exist "%/dp%%name_txt_wgIP%" (
 echo ===========================================
 echo            choice endpoint IP
 echo ===========================================
-echo [1] 162.159.193.1
-echo [2] 162.159.193.2
-echo [3] 162.159.193.3
-echo [4] 162.159.193.4
+echo [1] 188.114.97.1
+echo [2] 188.114.97.2
+echo [3] 188.114.97.3
+echo [4] 188.114.97.4
 echo [5] 162.159.193.5
 echo [6] 162.159.193.6
 echo [7] 162.159.193.7
@@ -126,10 +126,10 @@ choice /c 123456789 /n
  if errorlevel 7 call :set_wgIP 162.159.193.7 & goto cnt01
  if errorlevel 6 call :set_wgIP 162.159.193.6 & goto cnt01
  if errorlevel 5 call :set_wgIP 162.159.193.5 & goto cnt01
- if errorlevel 4 call :set_wgIP 162.159.193.4 & goto cnt01
- if errorlevel 3 call :set_wgIP 162.159.193.3 & goto cnt01
- if errorlevel 2 call :set_wgIP 162.159.193.2 & goto cnt01
- if errorlevel 1 call :set_wgIP 162.159.193.1 & goto cnt01
+ if errorlevel 4 call :set_wgIP 188.114.97.4 & goto cnt01
+ if errorlevel 3 call :set_wgIP 188.114.97.3 & goto cnt01
+ if errorlevel 2 call :set_wgIP 188.114.97.2 & goto cnt01
+ if errorlevel 1 call :set_wgIP 188.114.97.1 & goto cnt01
 :cnt01
 call :write_wgip )
 
